@@ -1,3 +1,5 @@
+#' Perform limited 1D DWT with wavethresh::wd()
+#'
 #' perform and return a (potentially) limited number of levels of DWT decomposition with [wavethresh::wd()], rather than the full decomposition which `wd()` returns be default.
 #' @param fulldecomp a [wavethresh::wd()] object
 #'

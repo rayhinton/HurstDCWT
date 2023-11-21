@@ -2,7 +2,7 @@
 % Please edit documentation in R/dwt_functions.R
 \name{decomp_at_level}
 \alias{decomp_at_level}
-\title{perform and return a (potentially) limited number of levels of DWT decomposition with \code{\link[wavethresh:wd]{wavethresh::wd()}}, rather than the full decomposition which \code{wd()} returns be default.}
+\title{Perform limited 1D DWT with wavethresh::wd()}
 \usage{
 decomp_at_level(fulldecomp, num_decomp = NULL)
 }
