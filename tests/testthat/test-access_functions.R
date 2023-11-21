@@ -7,5 +7,6 @@ thresh_im_dwt <- wavethresh::imwd(X_mat, filter.number = 2,
                                   bc = "periodic")
 
 # diagonal at 1 level
-testthat::expect_equal(access_dwt2D(manual_dwt_3, 1, "diagonal"),
-                       access_imwd(thresh_im_dwt, 1, "diagonal"))
+test_that("first level diagonal equals WaveThresh",
+          expect_equal(access_dwt2D(manual_dwt_3, 1, "diagonal"),
+                       access_imwd(thresh_im_dwt, 1, "diagonal")))

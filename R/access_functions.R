@@ -12,6 +12,8 @@
 # 2, second level, next smallest, = (J - 2)
 
 # a function to return the region label numbers used by WaveThresh
+#' @param input_label
+#'
 #' @export
 thresh_region <- function(input_label) {
     region_pattern <- paste0("^", input_label)
@@ -30,6 +32,11 @@ thresh_region <- function(input_label) {
 # TODO consider making this work with either string or integer inputs for the region, i.e., so that you can loop through the numbers of the region labels
 
 # TODO if I just return the vectors, could I neatly turn a vector of all the levels of coefficients into the final matrix in one step?
+#' @param imwd_object
+#'
+#' @param my_level
+#' @param my_region
+#'
 #' @export
 access_imwd <- function(imwd_object, my_level, my_region) {
     t_level <- imwd_object$nlevels - my_level
@@ -45,6 +52,11 @@ access_imwd <- function(imwd_object, my_level, my_region) {
     return(region_matrix)
 }
 
+#' @param dwt2D_object
+#'
+#' @param my_level
+#' @param my_region
+#'
 #' @export
 access_dwt2D <- function(dwt2D_object, my_level, my_region) {
     region_names <- c("horizontal", "vertical", "diagonal", "scaling")

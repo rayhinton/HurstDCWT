@@ -1,3 +1,6 @@
+library(devtools)
+library(usethis)
+
 library(wavethresh)
 
 tiff_object <- tiff::readTIFF("/home/rayhinton/Documents/PhD_classes/600_comp/project/images_misc/misc/boat.512.tiff")

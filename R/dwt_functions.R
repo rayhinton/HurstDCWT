@@ -1,21 +1,29 @@
+#' @param fulldecomp
+#'
+#' @param num_decomp
+#'
 #' @export
 
 decomp_at_level <- function(fulldecomp, num_decomp = NULL) {
-    num_levels <- log2(length(accessC(fulldecomp))) - 1
+    num_levels <- log2(length(wavethresh::accessC(fulldecomp))) - 1
     if (is.null(num_decomp)) {
         num_decomp <- num_levels
     }
     start_level <- num_levels - num_decomp + 1
     end_level <- start_level + num_decomp - 1
 
-    decomp_vec <- c(accessC(fulldecomp, level = start_level))
+    decomp_vec <- c(wavethresh::accessC(fulldecomp, level = start_level))
 
     for (i in start_level:end_level) {
-        decomp_vec <- c(decomp_vec, accessD(fulldecomp, level = i))
+        decomp_vec <- c(decomp_vec, wavethresh::accessD(fulldecomp, level = i))
     }
     return(decomp_vec)
 }
 
+#' @param image_mat
+#'
+#' @param num_decomp
+#'
 #' @export
 image_dwt <- function(image_mat, num_decomp = NULL) {
     # TODO check that input image_mat is square
@@ -33,7 +41,7 @@ image_dwt <- function(image_mat, num_decomp = NULL) {
         # - the "first" level is not 1; need to calculate the level I want based on the size of the matrix
         # - alternatively - could I just do the full decomposition all in one shot?
         # - or, can WaveThresh limit the levels of decomposition?
-        this_wd <- wd(image_mat[i, ],
+        this_wd <- wavethresh::wd(image_mat[i, ],
                       family = "DaubExPhase", filter.number = 2)
         this_decomp <- decomp_at_level(this_wd, num_decomp)
         # mid_wave[i, ] <- c(accessC(this_wd, level = num_levels),
@@ -43,7 +51,7 @@ image_dwt <- function(image_mat, num_decomp = NULL) {
 
     out_wave <- matrix(NA, nrow = nrow(mid_wave), ncol = ncol(mid_wave))
     for (i in 1:ncol(mid_wave)) {
-        this_wd <- wd(mid_wave[, i],
+        this_wd <- wavethresh::wd(mid_wave[, i],
                       family = "DaubExPhase", filter.number = 2)
         this_decomp <- decomp_at_level(this_wd, num_decomp)
         # out_wave[, i] <- c(accessC(this_wd, level = num_levels),
@@ -54,6 +62,10 @@ image_dwt <- function(image_mat, num_decomp = NULL) {
     return(out_wave)
 }
 
+#' @param image_mat
+#'
+#' @param num_decomp
+#'
 #' @export
 image_dwt_mult <- function(image_mat, num_decomp) {
     # TODO check image is square
