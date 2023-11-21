@@ -1,6 +1,9 @@
-#' @param fulldecomp
+#' perform and return a (potentially) limited number of levels of DWT decomposition with [wavethresh::wd()], rather than the full decomposition which `wd()` returns be default.
+#' @param fulldecomp a [wavethresh::wd()] object
 #'
-#' @param num_decomp
+#' @param num_decomp integer, starting from 1. the number of levels of decomposition to return
+#'
+#' @returns a vector containing the smooth and detail coefficients at the desired level (in that order, increasing in levels of detail).
 #'
 #' @export
 
@@ -20,9 +23,11 @@ decomp_at_level <- function(fulldecomp, num_decomp = NULL) {
     return(decomp_vec)
 }
 
-#' @param image_mat
+#' perform DWT on a matrix, i.e. a 2D signal.
+#' @param image_mat a square matrix
+#' @inheritParams decomp_at_level
 #'
-#' @param num_decomp
+#' @returns a square matrix
 #'
 #' @export
 image_dwt <- function(image_mat, num_decomp = NULL) {
@@ -62,9 +67,13 @@ image_dwt <- function(image_mat, num_decomp = NULL) {
     return(out_wave)
 }
 
-#' @param image_mat
+#' perform multiple levels of DWT decomposition on a matrix, i.e. 2D signal.
+#' @param image_mat a square matrix
+#' @inheritParams decomp_at_level
 #'
-#' @param num_decomp
+#' @returns a list with the following
+#' * `dwt`
+#' * `nlevels`
 #'
 #' @export
 image_dwt_mult <- function(image_mat, num_decomp) {
