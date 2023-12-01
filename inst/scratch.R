@@ -8,7 +8,9 @@ library(wavethresh)
 data(boat)
 
 
-manual_dwt <- image_dwt(boat, 1)
+manual_dwt <- image_dwt_mult(boat, 1)
 thresh_im_dwt <- wavethresh::imwd(boat, filter.number = 2,
                       family = "DaubExPhase",
                       bc = "periodic")
+
+manual_dwt |> access_dwt2D(1, "diagonal") |> log_e_region()
