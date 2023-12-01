@@ -9,7 +9,8 @@ This package can be used to calculate the Hurst exponent for 2D signals such as 
 ## Example usage
 
 ```
-# Get the DCWT of an image X (square matrix with side lengths a power of 2) at 5 levels of decomposition
+# Get the DCWT of an image X (square matrix with side lengths a power of 2) at 
+# 5 levels of decomposition
 dcwt_X <- image_dwt_mult(X, 5)
 
 # access the 1st level diagonal region
