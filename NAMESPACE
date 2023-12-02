@@ -3,6 +3,7 @@
 export(access_dwt2D)
 export(access_imwd)
 export(decomp_at_level)
+export(get_energies)
 export(image_dwt)
 export(image_dwt_mult)
 export(log_e_region)
