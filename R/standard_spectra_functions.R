@@ -85,3 +85,5 @@ get_slope <- function(energies_obj, levels_select = NULL,
     return(list(fit_slope = fit_slope,
                 fit_int = fit_int))
 }
+
+# TODO write function to calculate the Hurst exponent
