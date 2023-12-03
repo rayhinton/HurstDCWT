@@ -4,12 +4,14 @@
 \alias{image_dwt}
 \title{perform DWT on a matrix, i.e. a 2D signal.}
 \usage{
-image_dwt(image_mat, num_decomp = NULL)
+image_dwt(image_mat, num_decomp = NULL, ...)
 }
 \arguments{
 \item{image_mat}{a square matrix}
 
 \item{num_decomp}{integer, starting from 1. the number of levels of decomposition to return}
+
+\item{...}{wavelet filter options passed on to \code{wavethresh::wd()}}
 }
 \value{
 a square matrix

@@ -4,12 +4,14 @@
 \alias{image_dwt_mult}
 \title{perform multiple levels of DWT decomposition on a matrix, i.e. 2D signal.}
 \usage{
-image_dwt_mult(image_mat, num_decomp)
+image_dwt_mult(image_mat, num_decomp, ...)
 }
 \arguments{
 \item{image_mat}{a square matrix}
 
 \item{num_decomp}{integer, starting from 1. the number of levels of decomposition to return}
+
+\item{...}{wavelet filter options passed on to \code{wavethresh::wd()}}
 }
 \value{
 a list with the following

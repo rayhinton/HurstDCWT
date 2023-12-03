@@ -26,7 +26,7 @@ a list with:
 \item \code{spectra_energies},
 \item \code{level_vec},
 \item \code{region_vec},
-\item \code{location_stat})
+\item \code{location_stat}
 }
 }
 \description{
