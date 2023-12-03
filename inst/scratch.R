@@ -20,6 +20,9 @@ manual_dwt |> access_dwt2D(1, "diagonal") |> log_e_region()
 boat_energies <- get_energies(manual_dwt, location_stat = "mean")
 spectra_fit <- lm(boat_energies$spectra_energies ~ boat_energies$level_vec)
 
+get_slope_params <- get_slope(boat_energies, levels_select = 2:5)
+-(-get_slope_params$fit_slope + 2) / 2
+
 # calc H. negative slope because I am plotting the opposite way?
 -(-coef(spectra_fit)[2] + 2) / 2
 

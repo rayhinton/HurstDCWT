@@ -48,3 +48,40 @@ get_energies <- function(dwt2D_object, level_vec = NULL, region_vec = "diagonal"
                 region_vec = region_vec,
                 location_stat = location_stat))
 }
+
+#' calculate the spectra slope
+#'
+#' @param energies_obj a list as provided by [HurstDCWT::get_energies()]
+#' @param levels_select a vector with a selection of the levels to use for fitting. either a list of the specific levels, or a list of the level indexes within the `energies_obj$level_vec` vector.
+#' @param level_by_index whether to select the levels themselves or by index
+#' @param fit_method currently, only ordinary least squares via `"lm"` is supported.
+#'
+#' @returns a list with:
+#' - `fit_slope` slope of the fit line
+#' - `fit_int` intercept of the fit line
+#' @export
+get_slope <- function(energies_obj, levels_select = NULL,
+                      level_by_index = FALSE, fit_method = "lm") {
+    if (is.null(levels_select)) {
+        levels_select <- energies_obj$level_vec
+    }
+
+    # provide the specific levels, not the index of the levels within the level
+    # vector.
+    if (level_by_index == FALSE) {
+        fit_mask <- energies_obj$level_vec %in% levels_select
+        fit_levels <- energies_obj$level_vec[fit_mask]
+        fit_energies <- energies_obj$spectra_energies[fit_mask]
+    }
+
+    # TODO handle selection of levels by index
+
+    if (fit_method == "lm") {
+        lm_fit <- lm(fit_energies ~ fit_levels)
+        fit_slope <- coef(lm_fit)[2]
+        fit_int <- coef(lm_fit)[1]
+    }
+
+    return(list(fit_slope = fit_slope,
+                fit_int = fit_int))
+}
