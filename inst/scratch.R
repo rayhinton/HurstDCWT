@@ -9,8 +9,8 @@ library(wavethresh)
 data(boat)
 
 manual_dwt <- image_dwt_mult(boat, 8,
-                             # family = "DaubExPhase", filter.number = 2)
-                             family = "LinaMayrand", filter.number = 5.4)
+                             family = "Lawton", filter.number = 3)
+                             # family = "LinaMayrand", filter.number = 5.4)
 thresh_im_dwt <- wavethresh::imwd(boat, filter.number = 2,
                       family = "DaubExPhase",
                       bc = "periodic")
@@ -34,3 +34,33 @@ data.frame(level_vec = boat_energies$level_vec,
     geom_abline(intercept = coef(spectra_fit)[1],
                 slope = coef(spectra_fit)[2],
                 color = "red")
+
+#####
+
+# load test fBm data
+
+fbm_data <- read.csv("~/Documents/PhD_classes/600_comp/project/Hurst_DCWT_explore/fbm_data.csv", header = FALSE) |> as.matrix()
+# fbm_mat <- read.table("~/Documents/PhD_classes/600_comp/project/Hurst_DCWT_explore/fbm_data.csv")
+# image(fbm_mat)
+image(t(fbm_data[512:1, ]))
+
+fbm_dwt <- image_dwt_mult(fbm_data, 8,
+                          family = "Lawton", filter.number = 3)
+                        # family = "LinaMayrand", filter.number = 5.4)
+fbm_energies <- get_energies(fbm_dwt, location_stat = "mean")
+fbm_slope_params <- get_slope(fbm_energies)
+est_H(fbm_slope_params)
+
+plot(fbm_energies$level_vec, fbm_energies$spectra_energies)
+abline(fbm_slope_params$fit_int, fbm_slope_params$fit_slope, col = "red")
+
+image(t(sqrt(Mod(fbm_dwt$dwt[512:1, ]))), col = gray.colors(256))
+
+boat_dwt_forplot <- sqrt(Mod(manual_dwt$dwt))
+boat_dwt_forplot <- (boat_dwt_forplot - min(boat_dwt_forplot)) /
+    (max(boat_dwt_forplot) - min(boat_dwt_forplot))
+image(t(boat_dwt_forplot[512:1, ]), col = gray.colors(256))
+
+image(t(boat[512:1, ]), col = gray.colors(256))
+
+summary(as.vector(boat_dwt_forplot))
