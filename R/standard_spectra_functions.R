@@ -86,4 +86,12 @@ get_slope <- function(energies_obj, levels_select = NULL,
                 fit_int = fit_int))
 }
 
-# TODO write function to calculate the Hurst exponent
+#' Estimate Hurst exponent for a 2D signal
+#'
+#' @param slope_obj list, the output from [HurstDCWT::get_slope()]
+#'
+#' @returns scalar, the estimated Hurst exponent
+#' @export
+est_H <- function(slope_obj) {
+    return(-(-slope_obj$fit_slope + 2) / 2)
+}

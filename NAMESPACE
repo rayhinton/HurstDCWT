@@ -3,6 +3,7 @@
 export(access_dwt2D)
 export(access_imwd)
 export(decomp_at_level)
+export(est_H)
 export(get_energies)
 export(get_slope)
 export(image_dwt)

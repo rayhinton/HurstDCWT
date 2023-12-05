@@ -22,6 +22,7 @@ spectra_fit <- lm(boat_energies$spectra_energies ~ boat_energies$level_vec)
 
 get_slope_params <- get_slope(boat_energies, levels_select = 2:5)
 -(-get_slope_params$fit_slope + 2) / 2
+est_H(get_slope_params)
 
 # calc H. negative slope because I am plotting the opposite way?
 -(-coef(spectra_fit)[2] + 2) / 2
