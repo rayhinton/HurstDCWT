@@ -39,7 +39,7 @@ data.frame(level_vec = boat_energies$level_vec,
 
 # load test fBm data
 
-fbm_data <- read.csv("~/Documents/PhD_classes/600_comp/project/Hurst_DCWT_explore/fbm_data.csv", header = FALSE) |> as.matrix()
+fbm_data <- data("fbm2d_512_75")
 # fbm_mat <- read.table("~/Documents/PhD_classes/600_comp/project/Hurst_DCWT_explore/fbm_data.csv")
 # image(fbm_mat)
 image(t(fbm_data[512:1, ]))
