@@ -39,14 +39,14 @@ data.frame(level_vec = boat_energies$level_vec,
 
 # load test fBm data
 
-fbm_data <- data("fbm2d_512_75")
+data(fbm2d_512_75)
 # fbm_mat <- read.table("~/Documents/PhD_classes/600_comp/project/Hurst_DCWT_explore/fbm_data.csv")
 # image(fbm_mat)
-image(t(fbm_data[512:1, ]))
+image(t(fbm2d_512_75[512:1, ]), col = gray.colors(256))
 
-fbm_dwt <- image_dwt_mult(fbm_data, 8,
-                          family = "Lawton", filter.number = 3)
-                        # family = "LinaMayrand", filter.number = 5.4)
+fbm_dwt <- image_dwt_mult(fbm2d_512_75, 8,
+                          # family = "Lawton", filter.number = 3)
+                        family = "LinaMayrand", filter.number = 5.1)
 fbm_energies <- get_energies(fbm_dwt, location_stat = "mean")
 fbm_slope_params <- get_slope(fbm_energies)
 est_H(fbm_slope_params)
@@ -64,3 +64,11 @@ image(t(boat_dwt_forplot[512:1, ]), col = gray.colors(256))
 image(t(boat[512:1, ]), col = gray.colors(256))
 
 summary(as.vector(boat_dwt_forplot))
+
+#####
+# experiments for writing vignette
+
+use_vignette("simple-usage")
+
+# Another option is to use devtools::build_rmd("vignettes/my-vignette.Rmd") to render the vignette.
+devtools::build_rmd("vignettes/simple-usage.Rmd")

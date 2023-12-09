@@ -4,7 +4,7 @@ This package can be used to calculate the Hurst exponent for 2D signals such as 
 
 ## Install
 
-`devtools::install_github("rayhinton/HurstDCWT")`
+`devtools::install_github("rayhinton/HurstDCWT", dependencies = TRUE, build_vignettes = TRUE)`
 
 ## Example usage
 

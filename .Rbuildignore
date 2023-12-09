@@ -3,3 +3,5 @@
 ^LICENSE\.md$
 ^inst/scratch\.R$
 ^data-raw$
+^doc$
+^Meta$

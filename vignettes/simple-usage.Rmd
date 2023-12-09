@@ -1,0 +1,71 @@
+---
+title: "simple-usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{simple-usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+mar_par <- par("mar")
+```
+
+```{r setup}
+library(HurstDCWT)
+library(ggplot2)
+
+plot_square_image <- function(image_mat) {
+  par(mar = c(0, 0, 0, 0))
+  image(t(image_mat[nrow(image_mat):1, ]), 
+        col = gray.colors(256), asp = 1, axes = FALSE)
+}
+```
+
+```{r, out.width="67%"}
+data(boat)
+# image(t(boat[512:1, ]), col = gray.colors(256), asp = 1, axes = FALSE)
+plot_square_image(boat)
+```
+
+
+```{r, out.width="67%"}
+boat_dwt_ex <- image_dwt_mult(boat, 2, 
+                              family = "LinaMayrand", filter.number = 5.1)
+boat_dwt_plot <- Mod(boat_dwt_ex$dwt)
+plot_square_image(boat_dwt_plot)
+```
+
+```{r}
+boat_dwt <- image_dwt_mult(boat, 6, 
+                              family = "LinaMayrand", filter.number = 5.1)
+# use the "access" function to get one of the regions
+# roughly give a sense of the "size" of coefficients
+summary(as.vector(Mod(access_dwt2D(boat_dwt, 1, "diagonal"))))
+```
+
+```{r}
+data(fbm2d_512_75)
+
+# an example of fractional Brownian motion with H = 0.75
+plot_square_image(fbm2d_512_75)
+```
+```{r}
+fbm_dwt <- image_dwt_mult(fbm2d_512_75, 8, 
+                          family = "LinaMayrand", filter.number = 5.1)
+
+fbm_energies <- get_energies(fbm_dwt, location_stat = "mean")
+fbm_slope_params <- get_slope(fbm_energies)
+est_H(fbm_slope_params)
+```
+
+
+```{r end, include=FALSE}
+par(mar = mar_par)
+```
+
