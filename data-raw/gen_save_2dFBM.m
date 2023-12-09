@@ -1,5 +1,5 @@
 % gen and save 2d FBM
-rng(2)
+rng(3)
 
 side_length = 512;
 H = 0.75;
