@@ -82,8 +82,8 @@ get_slope <- function(energies_obj, levels_select = NULL,
         fit_int <- coef(lm_fit)[1]
     }
 
-    return(list(fit_slope = fit_slope,
-                fit_int = fit_int))
+    return(list(fit_slope = unname(fit_slope),
+                fit_int = unname(fit_int)))
 }
 
 #' Estimate Hurst exponent for a 2D signal
