@@ -10,7 +10,7 @@ devtools::install_github("rayhinton/HurstDCWT", dependencies = TRUE, build_vigne
 
 ## Example usage
 
-```
+```R
 # load a provided sample data matrix of simulated fractional Brownian motion
 data(fbm2d_512_75)
 
