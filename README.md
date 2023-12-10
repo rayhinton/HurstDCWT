@@ -21,7 +21,7 @@ fbm_dwt <- image_dwt_mult(fbm2d_512_75, 8,
                           family = "LinaMayrand", filter.number = 5.1)
 
 # access the 1st level diagonal region
-diag_1 <- access_dwt2d(fbm_dwt, 1, "diagonal")
+diag_1 <- access_dwt2D(fbm_dwt, 1, "diagonal")
 
 # calculate the level-wise energies
 fbm_energies <- get_energies(fbm_dwt, location_stat = "mean")
