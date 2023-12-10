@@ -4,12 +4,12 @@
 \name{HurstDCWT-package}
 \alias{HurstDCWT}
 \alias{HurstDCWT-package}
-\title{HurstDCWT: What the Package Does (One Line, Title Case)}
+\title{HurstDCWT: Estimate Hurst's Exponent Using Discrete Complex Wavelet Transforms}
 \description{
-What the package does (one paragraph).
+This package can be used to calculate the Hurst exponent for 2D signals such as images using discrete complex wavelet transforms.
 }
 \author{
-\strong{Maintainer}: First Last \email{first.last@example.com} (\href{https://orcid.org/YOUR-ORCID-ID}{ORCID})
+\strong{Maintainer}: Ray Hinton \email{ray.hinton@gmail.com} (\href{https://orcid.org/0009-0000-1733-1613}{ORCID})
 
 }
 \keyword{internal}

@@ -1,10 +1,10 @@
 Package: HurstDCWT
-Title: What the Package Does (One Line, Title Case)
+Title: Estimate Hurst's Exponent Using Discrete Complex Wavelet Transforms
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("Ray", "Hinton", , "ray.hinton@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0000-1733-1613"))
+Description: This package can be used to calculate the Hurst exponent for 2D signals such as images using discrete complex wavelet transforms. 
 License: GPL (>= 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
