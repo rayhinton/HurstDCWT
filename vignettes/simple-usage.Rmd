@@ -16,9 +16,14 @@ knitr::opts_chunk$set(
 mar_par <- par("mar")
 ```
 
+# Introduction
+
+The `HurstDCWT` package can be used to estimate the Hurst exponent of an image using discrete complex wavelet transforms (DCWT). In this vignette, we will demonstrate the basic usage in a couple examples.
+
+First, load the relevant packages, and define a quick function that we'll use for displaying the grayscale images that we will process later.
+
 ```{r setup}
 library(HurstDCWT)
-library(ggplot2)
 
 plot_square_image <- function(image_mat) {
   par(mar = c(0, 0, 0, 0))
@@ -27,9 +32,12 @@ plot_square_image <- function(image_mat) {
 }
 ```
 
+# A boat!
+
+First, we'll look at an example image and see what happens when we process it with the DCWT. This image of a boat is from the [USC Signal and Image Processing Institute image database](https://sipi.usc.edu/database/).
+
 ```{r, out.width="67%"}
 data(boat)
-# image(t(boat[512:1, ]), col = gray.colors(256), asp = 1, axes = FALSE)
 plot_square_image(boat)
 ```
 
@@ -42,7 +50,7 @@ plot_square_image(boat_dwt_plot)
 ```
 
 ```{r}
-boat_dwt <- image_dwt_mult(boat, 6, 
+boat_dwt <- image_dwt_mult(boat, 8, 
                               family = "LinaMayrand", filter.number = 5.1)
 # use the "access" function to get one of the regions
 # roughly give a sense of the "size" of coefficients
@@ -61,9 +69,13 @@ fbm_dwt <- image_dwt_mult(fbm2d_512_75, 8,
 
 fbm_energies <- get_energies(fbm_dwt, location_stat = "mean")
 fbm_slope_params <- get_slope(fbm_energies)
-est_H(fbm_slope_params)
+
+plot_spectra(fbm_energies)
 ```
 
+```{r}
+est_H(fbm_slope_params)
+```
 
 ```{r end, include=FALSE}
 par(mar = mar_par)

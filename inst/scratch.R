@@ -35,6 +35,8 @@ data.frame(level_vec = boat_energies$level_vec,
                 slope = coef(spectra_fit)[2],
                 color = "red")
 
+plot_spectra(boat_energies, get_slope_params) +
+    ggtitle("wow")
 #####
 
 # load test fBm data
