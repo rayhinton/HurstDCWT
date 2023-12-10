@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  out.width="67%"
 )
 
 mar_par <- par("mar")
@@ -36,18 +37,20 @@ plot_square_image <- function(image_mat) {
 
 First, we'll look at an example image and see what happens when we process it with the DCWT. This image of a boat is from the [USC Signal and Image Processing Institute image database](https://sipi.usc.edu/database/).
 
-```{r, out.width="67%"}
+```{r}
 data(boat)
 plot_square_image(boat)
 ```
 
-
-```{r, out.width="67%"}
+Next, we'll use the `image_dwt_mult()` function to compute 2 levels of the DCWT. Usually, we'll compute more levels when we want to estimate the Hurst exponent, but this makes it easier to visualize what the DCWT is doing. The `family` and `filter.number` options are those from the [Wavethresh](https://cran.r-project.org/web/packages/wavethresh/index.html) package. We take the modulus of the wavelet coefficients so we can plot them - they are complex-valued, but the modulus gives a sense of the magnitude of a complex number. In a 2D discrete wavelet transform, there are 3 "detail" regions in each level, and the final level has a set of "smooth" or "approximation" coefficients, which can be seen in the upper-left corner of this image.
+```{r}
 boat_dwt_ex <- image_dwt_mult(boat, 2, 
                               family = "LinaMayrand", filter.number = 5.1)
 boat_dwt_plot <- Mod(boat_dwt_ex$dwt)
 plot_square_image(boat_dwt_plot)
 ```
+
+Next, we take more levels of decomposition for analysis. As an example of using the `access_dwt2D()` function, we look at the magnitude of the detail coefficients in the `"diagonal"` region of the first level of decomposition. We can see that 25% of the coefficients are around $10^{-3}$ or less - this is an example of wavelets creating a sparse representation of a signal. 
 
 ```{r}
 boat_dwt <- image_dwt_mult(boat, 8, 
@@ -57,12 +60,50 @@ boat_dwt <- image_dwt_mult(boat, 8,
 summary(as.vector(Mod(access_dwt2D(boat_dwt, 1, "diagonal"))))
 ```
 
+Now, we demonstrate the main functions of the packages.
+
+- `get_energies()` calculates the level-wise energies of the image.
+- `get_slope()` determines the slope of a line fit to the log average energies and the level numbers.
+- `plot_spectra()` quickly plots the wavelet spectra of the log average energies versus the level numbers. Here, we also add the `get_slope` output object to add the line that was fit. 
+
+```{r}
+boat_dwt_energies <- get_energies(boat_dwt, location_stat = "mean")
+boat_dwt_fit <- get_slope(boat_dwt_energies)
+plot_spectra(boat_dwt_energies)
+```
+
+Observe in the plot above that levels 7 and 8 seem to level out into a shallower slope than that of the remaining levels. This is is often seen in wavelet spectra - the higher levels of decomposition are based on fewer coefficients, and so exhibit higher variability. It is common to estimate the slope using only a subset of the levels. We can choose a subset of the levels in the `get_slope()` function using the `levels_select` option. An example of this is shown below, along with a plot of the spectra with the new fit line.
+
+```{r}
+boat_dwt_fit26 <- get_slope(boat_dwt_energies, levels_select = 2:6)
+plot_spectra(boat_dwt_energies, boat_dwt_fit26)
+```
+
+Satisfied with the spectra fit, we can finally estimate the Hurst exponent using the `est_H()` function. 
+
+```{r}
+est_H(boat_dwt_fit26)
+```
+
+Theoretically, the Hurst exponent takes on values in $(0, 1)$. A value near 0.5 indicates a highly random signal with little correlation. Values in 0 - 0.5 indicates negative correlation between adjacent data points. In a full-size image like this, the interpretation is not so clear (typically, subregions of an image would be investigated). Here, it could be that the stark changes in the image from sky, to boat in the foreground, to the different colors of the boat, can be seen as data points that are negatively correlated in space.
+
+# Fractional Brownian motion
+
+Now, we analyze a type of data that is generated to have a known Hurst exponent value. More information about fractional Brownian motion (fBm) can be found [on Wikipedia](https://en.wikipedia.org/wiki/Fractional_Brownian_motion).
+
+In this case, we load a provided sample matrix for a $512 \times 512$ image of simulated fBm with a Hurst exponent of 0.75.
+
 ```{r}
 data(fbm2d_512_75)
 
 # an example of fractional Brownian motion with H = 0.75
 plot_square_image(fbm2d_512_75)
 ```
+
+It's (somewhat) random noise, so it's not much to look at! But it is useful to test out estimation methods like these on data with known parameters.
+
+Here, we carry out the same workflow as before - applying the DCWT, calculating the energies, and estimating the slope of the wavelet spectra. We plot the wavelet spectra to see that the fit line matches well with all the calculated energies.
+
 ```{r}
 fbm_dwt <- image_dwt_mult(fbm2d_512_75, 8, 
                           family = "LinaMayrand", filter.number = 5.1)
@@ -70,9 +111,10 @@ fbm_dwt <- image_dwt_mult(fbm2d_512_75, 8,
 fbm_energies <- get_energies(fbm_dwt, location_stat = "mean")
 fbm_slope_params <- get_slope(fbm_energies)
 
-plot_spectra(fbm_energies)
+plot_spectra(fbm_energies, fbm_slope_params)
 ```
 
+Finally, we estimate the Hurst exponent, which is close the actual value of 0.75.
 ```{r}
 est_H(fbm_slope_params)
 ```
