@@ -31,3 +31,8 @@ fbm_slope_params <- get_slope(fbm_energies)
 # estimate the Hurst exponent
 est_H(fbm_slope_params)
 ```
+
+# References and credits
+
+- R `wavethresh` package: [https://cran.r-project.org/web/packages/wavethresh/index.html](https://cran.r-project.org/web/packages/wavethresh/index.html)
+- Jeon, Seonghye, Orietta Nicolis, and Brani Vidakovic. "Mammogram diagnostics via 2-D complex wavelet-based self-similarity measures." _Sao Paulo Journal of Mathematical Sciences_ 8.2 (2014): 265-284.
